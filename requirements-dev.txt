@@ -1,0 +1,2 @@
+# Offline structural validation and unit tests; no service SDK dependency.
+PyYAML==6.0.3
