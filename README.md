@@ -52,9 +52,8 @@ For example: “Connect me to Katara”; “What does our release guide say abou
 
 The skill uses only tools discovered from your live server. Documentation and implemented contracts do not guarantee a feature is enabled in your deployment. A denied read is not a reason to buy a plan or broaden access automatically.
 
-## Design and quality
+## Quality and contributing
 
-- [Skill design and SaaS activation journey](docs/skill-design.md)
 - [Behavioral evaluation scenarios](evals/README.md)
 - [Contributing and validation](CONTRIBUTING.md)
 - [Security reporting](SECURITY.md)
