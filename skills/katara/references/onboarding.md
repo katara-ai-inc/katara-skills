@@ -27,7 +27,8 @@ In Hermes, use the supported connection-management tool when available; consult 
 2. Have the user review organization, residency and subscription choices in the application. Published marketing and rollout-specific documentation can differ; do not make immutable residency or paid choices for the user. Do not hardcode prices, quotas, trials or region availability in this skill.
 3. Start with one small non-sensitive document the user is authorized to upload. Confirm its destination and audience before any upload. No automatic workspace scan or bulk ingestion.
 4. Choose a supported workflow:
-   - **Brain available:** create a Personal or Team Brain deliberately; the kind is permanent. A Team Brain without audience grants is owner-only. Wait for readiness, then upload directly through **Sources → Upload sources** and inspect activity/freshness. Configure a Brain-backed Q&A agent for MCP memory/page source selection.
+   - **Local file / CLI:** the agent checks or installs the official checksummed CLI after approval; the user creates their own API access grant and enters it locally. Follow the [CLI guide](cli.md) for Document write / Document read / Agent read presets, their broader-write caveat, exact destination selection and uploaded-document readback. This path does not require an MCP connection.
+   - **Brain available:** create a Personal or Team Brain deliberately; the kind is permanent. A Team Brain without audience grants is owner-only. Wait for readiness, then use an explicitly authorized CLI upload or **Sources → Upload sources** and inspect activity/freshness. Configure a Brain-backed Q&A agent for MCP memory/page source selection.
    - **Collection workflow:** create/use a Content Uploader, ingest through Document Upload, create a Collection selecting the intended documents, synchronize deliberately, and configure a collection-backed Q&A agent. This supports `synthesize` only if the live server advertises and authorizes it; it is not a substitute for Brain memory.
 5. Test an answer in Prompt Lab if available, then connect the AI client through the MCP portal as above.
 6. Ask one specific question with a known answer in that document and inspect the returned evidence. Stop and diagnose unavailable tools/readiness rather than creating duplicate resources.
@@ -39,6 +40,7 @@ If Brain or generation capabilities are not enabled, the assistant can guide sup
 - **Account ready:** user can select the intended organization.
 - **Knowledge ready:** accepted content is readable through the intended knowledge path; receipt alone is insufficient.
 - **Client ready:** OAuth completes and tools are discovered.
+- **CLI ready (when needed):** the installed executable passes its upload help check, the user's own key is configured locally, and actual upload/readback and agent discovery outcomes are reported independently.
 - **First value:** a real authorized read returns usable evidence, or truthfully reports its limitations.
 - **Optional retention:** user deliberately saves an approved fact or returns for another useful lookup.
 

@@ -15,7 +15,8 @@ The live server's discovered names and schemas are authoritative. This is a rout
 | Edit a Wiki page | `put_page` | Full canonical content; revision checks and protected content apply. |
 | Assemble context / inspect updates | `context_pack`, `delta` | WORLD-only; not a complete change/deletion feed. |
 | Discover policies | `list_agents`, `get_agent` | Authorized agent metadata, not exhaustive collection enumeration or secrets. |
-| Ingest through an uploader | `upload_document` | Inspect its schema; its ingestion `source_id` is not a memory alias. |
+| Upload a local file | `katara-cli document upload` | Follow the [CLI guide](cli.md); independent API key, approved file and explicit Brain/Content Uploader target. |
+| Ingest through an MCP uploader | `upload_document` | Inspect its live schema; its ingestion `source_id` is not a memory alias. |
 | Synchronize one collection | `sync_collection` | Explicit `collection_id`; changes indexed data, not Brain refresh. |
 
 For memory/page operations, a concrete `source_id` is an authorized Q&A policy alias. All require a Brain-backed alias except explicitly selected collection-backed `synthesize`. Selecting an alias neither grants permissions nor changes a saved default. Never guess an ID or fall back to a different source after denial.
@@ -38,7 +39,7 @@ Do not hand-build tool payloads from this table: inspect required fields, enum c
 | Upload accepted, answer still stale | Distinguish ingestion, indexing, refresh and query readiness; inspect supported activity rather than repeat-uploading. |
 | Empty or degraded evidence | Report selected source, scope and coverage; do not call it an exhaustive absence finding. |
 
-Human OAuth identifies the user/client; current backend role/resource checks determine access. Katara-issued API/application credentials may have additional stored grants. Do not embed a fixed scope-upgrade recipe: deployed authorization can differ from older documentation. Never disable audience, membership or resource validation to repair a connection.
+Human OAuth identifies the user/client; current backend role/resource checks determine access. Katara-issued API/application credentials have separate stored grants; see the [CLI permission and key-creation guide](cli.md), including preset over-granting and application Brain-inspection limits. Do not turn that API-key setup into an MCP OAuth scope-upgrade recipe: deployed authorization can differ from older documentation. Never disable audience, membership or resource validation to repair a connection.
 
 `world` visibility is bounded to authorized Brain readers. `private` writes cannot be recalled remotely, including by the author. `delta` may begin with an empty result for a new/idle session; missing updates do not prove a cached page is still authorized. Honor current authorization on every access.
 

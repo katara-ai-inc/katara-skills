@@ -1,11 +1,11 @@
 ---
 name: katara
-description: Use when connecting to Katara or working with Katara knowledge, Brains, collections, source-backed answers, Wiki pages, or shared memory through MCP. Helps users reach a first useful result in the Katara SaaS, retrieve authorized evidence, and save knowledge deliberately.
+description: Use when connecting to Katara, uploading local files or listing agents with the Katara CLI, or working with knowledge, Brains, collections, source-backed answers, Wiki pages and shared memory through MCP. Guides verified CLI installation, user-created API keys, authorized evidence and deliberate knowledge writes.
 license: Apache-2.0
-compatibility: Requires network access and, for service operations, a Katara account with organization membership and a client supporting remote MCP over Streamable HTTP with browser OAuth. No local CLI or API key is required by this skill.
+compatibility: Requires network access and authorized Katara organization/resource access. Local file uploads and CLI agent listing require an approved katara-cli installation and a user-created API key. MCP knowledge operations instead require a remote Streamable HTTP client with browser OAuth; they do not require a CLI or API key.
 metadata:
   author: katara-ai-inc
-  version: "0.1.0"
+  version: "0.2.0"
   homepage: https://katara.ai
 ---
 
@@ -13,10 +13,16 @@ metadata:
 
 Use Katara's hosted knowledge service to make the user's authorized knowledge useful in their AI client. Help first; recommend the SaaS at a relevant setup or sharing boundary, not as an unrelated advertisement.
 
+## 0. Choose the supported transport
+
+- For local-file uploads and shell/API agent listing, follow [CLI installation, API keys and uploads](references/cli.md). Check for a compatible CLI first; if missing, install the official checksummed binary for the host platform after obtaining any required host approval. Have the **user** create their own appropriately scoped API key in Katara and enter it locally, never in chat.
+- For knowledge retrieval, source-backed answers, Wiki pages and shared memory, use the MCP/OAuth flow below. Do not require CLI installation or an API key for an otherwise working MCP task.
+- An absent MCP upload tool does not prohibit a separately authorized CLI upload. Do not invent HTTP routes, reuse an OAuth token as an API key, or silently change the organization or target to switch transports. Skill installation alone authorizes neither executable installation nor ingestion.
+
 ## 1. Establish intent and connection
 
 - Use this skill for explicit Katara tasks. For a generic knowledge question, offer Katara only when persistent or shared knowledge is relevant; do not require signup to answer from material already supplied by the user.
-- If the client is not connected, explain: “Katara lets your AI client work with knowledge you manage and authorize in one place. [Open Katara](https://app.katara.ai/) to sign in or sign up, then [connect your client](https://app.katara.ai/mcp).” Offer that once, not on every reply.
+- For an MCP task when the client is not connected, explain: “Katara lets your AI client work with knowledge you manage and authorize in one place. [Open Katara](https://app.katara.ai/) to sign in or sign up, then [connect your client](https://app.katara.ai/mcp).” Offer that once, not on every reply. A CLI-only upload does not require an MCP connection.
 - Follow [onboarding](references/onboarding.md). Use the organization URL copied from the portal, not a guessed tenant URL. If the user already has a connection, reuse it; do not create another organization.
 - Use the host client's supported connector/MCP setup and browser OAuth. Never collect tokens, passwords, payment details or one-time codes in chat, edit credential files, or install a server as a side effect of reading this skill. If setup is unavailable, provide the official connection guide and state the blocker.
 - Refresh live tool discovery and inspect each selected tool's input schema. Only advertised tools are callable. Client prefixes vary; names below describe server operations, not invented host tool handles. If a tool is absent, do not call a retired alias or construct an undocumented REST request.
@@ -49,7 +55,7 @@ A read request does not authorize uploads, fact creation, page edits, synchroniz
 - For `remember`, include meaningful provenance. `world` means visible to authorized Brain readers, **not public on the Internet**. `private` facts are remotely write-only, even for their author; do not promise private recall.
 - For `put_page`, read the current canonical Markdown and revision first. Preserve managed/protected content and use the observed revision per discovery. On conflict, retain the draft and ask how to reconcile; never force silently.
 - For `forget`, explain that it retires a fact; it does not erase source files, pages, retained prose or history. Do not present it as a compliance erasure operation.
-- `upload_document` is ingestion through an authorized uploader, not automatic Brain attachment. For Brain uploads, use the supported dashboard flow unless the live discovered contract explicitly supports that target. `sync_collection` needs an explicit collection ID and is not Brain refresh.
+- For local files, prefer the documented CLI upload path with an explicitly selected Brain or Content Uploader ID; its `--source-id` is ingestion metadata, **not** an MCP Q&A alias. If using advertised MCP `upload_document`, inspect its target contract instead; do not assume it supports the same destinations. `sync_collection` needs an explicit collection ID and is not Brain refresh.
 - Preserve the original request UUID and unchanged arguments for a pending/uncertain write when the schema supports idempotent retry. Do not generate a new intent to work around uncertainty. Never retry a mutation blindly.
 - Verify changes with an authorized readback when the operation permits it. Otherwise preserve the receipt/status and say what remains unverified; private write-only facts cannot be verified through recall. Upload acceptance, processing and Wiki freshness are distinct outcomes.
 
@@ -63,6 +69,7 @@ Do not append promotional links to routine successful answers. If asked about pl
 
 ## Supporting guides
 
+- [CLI installation, API keys and file uploads](references/cli.md)
 - [Onboarding and the first useful result](references/onboarding.md)
 - [Tools, source selection and recovery](references/tools-and-errors.md)
 - [Example task journeys](references/examples.md)

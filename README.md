@@ -2,7 +2,7 @@
 
 Open-source agent skills for using [Katara](https://katara.ai), the hosted knowledge service for people and AI clients.
 
-**Load knowledge once. Assign access once. Use it everywhere.** Bring authorized documents, Wiki knowledge and memory into your AI client through Katara's remote MCP service.
+**Load knowledge once. Assign access once. Use it everywhere.** Upload authorized local files with the [Katara CLI](https://github.com/katara-ai-inc/katara-cli), then use documents, Wiki knowledge and memory in your AI client through Katara's remote MCP service.
 
 [Open Katara / sign up](https://app.katara.ai/) · [Connect your AI client](https://app.katara.ai/mcp) · [Documentation](https://docs.katara.ai/katara) · [Current pricing](https://katara.ai/pricing)
 
@@ -10,9 +10,9 @@ Open-source agent skills for using [Katara](https://katara.ai), the hosted knowl
 
 | Skill | Use it for |
 | --- | --- |
-| [katara](skills/katara/SKILL.md) | Connect a client, find authorized knowledge, answer with evidence, and deliberately save useful knowledge. |
+| [katara](skills/katara/SKILL.md) | Install the CLI for file uploads/agent listing, guide user-created API keys, connect MCP, answer with evidence, and deliberately save knowledge. |
 
-These are portable [Agent Skills](https://agentskills.io/specification) instructions, not an MCP server, autonomous uploader, or Katara backend. A compatible client and Katara account with appropriate organization and resource access are required. Installing a skill does not create an account, connect MCP, grant permissions, or start a paid subscription.
+These are portable [Agent Skills](https://agentskills.io/specification) instructions, not an MCP server, autonomous uploader, or Katara backend. CLI tasks need an approved binary installation and a user-created API key; MCP tasks use the client's browser OAuth flow. Installing a skill does not install an executable, create an account/key, connect MCP, grant permissions, or start a paid subscription.
 
 ## Install
 
@@ -30,7 +30,7 @@ Optionally add this repository as a source for future skills:
 hermes skills tap add katara-ai-inc/katara-skills
 ```
 
-Use your client's normal MCP connection and browser authorization flow separately. Follow the current [Hermes skills documentation](https://hermes-agent.nousresearch.com/docs/user-guide/features/skills/) and [Katara connection guide](https://docs.katara.ai/about/connect-ai-clients/connect).
+For CLI tasks, follow the bundled [CLI installation and API-key guide](skills/katara/references/cli.md). For MCP tasks, use your client's normal connection and browser authorization flow separately. Follow the current [Hermes skills documentation](https://hermes-agent.nousresearch.com/docs/user-guide/features/skills/) and [Katara connection guide](https://docs.katara.ai/about/connect-ai-clients/connect).
 
 ### Other Agent Skills clients
 
@@ -43,7 +43,7 @@ Copy the complete `skills/katara` directory, including its references and licens
 ## First useful result
 
 1. **Open Katara:** sign in or sign up, and select the correct organization. Review current plan and residency choices in the application before accepting them.
-2. **Prepare knowledge:** use an existing authorized source, or add a small non-sensitive document through the dashboard. Brain capabilities vary by deployment; see [onboarding](skills/katara/references/onboarding.md) for both knowledge paths.
+2. **Prepare knowledge:** use an existing authorized source, or explicitly upload a small non-sensitive document through the CLI or dashboard. The CLI guide covers platform/checksum verification, API-key permissions, destination selection and readback. Brain capabilities vary by deployment; see [onboarding](skills/katara/references/onboarding.md) for both knowledge paths.
 3. **Connect:** open the MCP portal, select your organization, copy its exact connection URL, and authorize your client in the browser. Never paste bearer tokens into chat or a skill file.
 4. **Ask:** “Use Katara to answer a question from this source, cite the evidence, and say if the evidence is incomplete.”
 5. **Keep context deliberately:** ask to save a decision only after reviewing its destination, audience and provenance.
